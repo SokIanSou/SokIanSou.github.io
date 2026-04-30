@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assistive Navigation Research — Prof. Sou, NCKU EE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #ffffff;
+  --bg2:      #f6f8fb;
+  --bg3:      #eef1f7;
+  --text:     #0f1923;
+  --text2:    #374151;
+  --dim:      #6b7a8d;
+  --teal:     #0891b2;
+  --teal-light: #e0f2fe;
+  --teal-mid: #7dd3fc;
+  --amber:    #d97706;
+  --amber-light: #fef3c7;
+  --amber-mid:#fcd34d;
+  --border:   #e2e8f0;
+  --border2:  #cbd5e1;
+}
+
+html { background: #f0f4f8; font-family: 'Inter', sans-serif; color: var(--text); }
+body { max-width: 1080px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* ── HERO ── */
+.hero {
+  background: var(--text);
+  margin: 0 -24px;
+  padding: 72px 24px 56px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content:'';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, oklch(0.72 0.14 192 / 0.25) 0%, transparent 55%),
+              radial-gradient(ellipse at 20% 80%, oklch(0.78 0.14 72 / 0.15) 0%, transparent 45%);
+}
+.hero-inner { max-width: 1080px; margin: 0 auto; position: relative; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: #93c5fd; letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-size: clamp(26px, 3.5vw, 44px); font-weight: 800;
+  color: #ffffff; line-height: 1.15; text-wrap: pretty;
+  max-width: 800px; margin-bottom: 24px;
+}
+.hero h1 .ht { color: #67e8f9; }
+.hero-author {
+  font-size: 17px; font-weight: 600; color: #e2e8f0; margin-bottom: 6px;
+}
+.hero-author small { font-size: 13px; color: #94a3b8; font-weight: 400; }
+.hero-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.hchip {
+  font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+  padding: 7px 14px; border-radius: 8px; border: 1px solid;
+}
+.hchip.t { border-color: #67e8f9; color: #67e8f9; background: rgba(103,232,249,0.08); }
+.hchip.a { border-color: #fcd34d; color: #fcd34d; background: rgba(252,211,77,0.08); }
+
+/* ── CONTENT WRAPPER ── */
+.content { background: var(--bg); border-radius: 0 0 20px 20px; padding: 60px 0 20px; }
+
+/* ── SECTION ── */
+.section { padding: 0 48px; margin-bottom: 64px; }
+.section:first-child { padding-top: 0; }
+
+.sec-eyebrow {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;
+}
+.sec-title {
+  font-size: 28px; font-weight: 800; color: var(--text);
+  line-height: 1.2; margin-bottom: 10px;
+}
+.sec-title .t { color: var(--teal); }
+.sec-title .a { color: var(--amber); }
+.sec-desc {
+  font-size: 15px; color: var(--text2); line-height: 1.75;
+  max-width: 720px; margin-bottom: 36px; text-wrap: pretty;
+}
+
+hr.div { border: none; border-top: 1px solid var(--border); margin: 56px 48px; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 28px 28px;
+}
+.card-teal { border-top: 3px solid var(--teal); }
+.card-amber { border-top: 3px solid var(--amber); }
+.card-title {
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; margin-bottom: 16px;
+}
+.card-title.t { color: var(--teal); }
+.card-title.a { color: var(--amber); }
+
+/* ── GRIDS ── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+@media(max-width:680px){ .g2,.g3,.g4 { grid-template-columns: 1fr; } }
+
+/* ── STAT ── */
+.stat-block {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px 20px; text-align: center;
+}
+.stat-n { font-size: 44px; font-weight: 800; font-family: 'JetBrains Mono',monospace; line-height: 1; color: var(--teal); }
+.stat-n.a { color: var(--amber); }
+.stat-l { font-size: 13px; color: var(--dim); margin-top: 8px; line-height: 1.4; }
+
+/* ── BULLETS ── */
+ul.bl { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+ul.bl li { font-size: 14px; color: var(--text2); line-height: 1.6; padding-left: 22px; position: relative; }
+ul.bl li::before { content:''; position:absolute; left:0; top:8px; width:8px; height:8px; border-radius:50%; background:var(--teal); }
+ul.bl.a li::before { background: var(--amber); }
+
+/* ── TABLE ── */
+.ptable { width:100%; border-collapse:collapse; font-size:13.5px; }
+.ptable th { background:var(--bg3); color:var(--teal); font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; padding:10px 14px; text-align:left; border-bottom:2px solid var(--border2); }
+.ptable td { padding:10px 14px; color:var(--text2); border-bottom:1px solid var(--border); }
+.ptable tr:last-child td { border-bottom:none; }
+.ptable .hi { color:var(--teal); font-weight:600; }
+.ptable .hi-a { color:var(--amber); font-weight:600; }
+
+/* ── BAR CHART ── */
+.bar-chart { display:flex; flex-direction:column; gap:12px; }
+.bar-row { display:flex; align-items:center; gap:14px; }
+.bar-label { font-size:12.5px; font-family:'JetBrains Mono',monospace; color:var(--text2); width:130px; flex-shrink:0; text-align:right; }
+.bar-track { flex:1; background:var(--bg3); border-radius:6px; height:30px; overflow:hidden; }
+.bar-fill { height:100%; border-radius:6px; display:flex; align-items:center; justify-content:flex-end; padding-right:10px; font-size:12px; font-family:'JetBrains Mono',monospace; font-weight:700; }
+
+/* ── ARCHITECTURE (LAYERED) ── */
+.arch-wrap { border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+.arch-layer {
+  display: flex; align-items: stretch;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.arch-layer:last-child { border-bottom: none; }
+.arch-layer-label {
+  width: 110px; flex-shrink: 0;
+  background: var(--bg3); border-right: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px 10px; text-align: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  font-weight: 600; color: var(--dim); text-transform: uppercase; letter-spacing: 0.07em;
+  writing-mode: horizontal-tb;
+}
+.arch-layer-label.t { background: var(--teal-light); color: var(--teal); border-right-color: #bae6fd; }
+.arch-layer-label.a { background: var(--amber-light); color: var(--amber); border-right-color: var(--amber-mid); }
+.arch-blocks {
+  flex: 1; display: flex; align-items: center;
+  gap: 0; padding: 16px 20px; flex-wrap: wrap;
+}
+.arch-block {
+  flex: 1; min-width: 100px;
+  background: var(--bg); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 14px 12px;
+  text-align: center; display: flex; flex-direction: column;
+  align-items: center; gap: 6px;
+}
+.arch-block.hi-t { border-color: var(--teal); background: var(--teal-light); }
+.arch-block.hi-a { border-color: var(--amber); background: var(--amber-light); }
+.arch-block .ab-icon { font-size: 22px; }
+.arch-block .ab-name { font-size: 12.5px; font-weight: 700; color: var(--text); }
+.arch-block .ab-sub { font-size: 11px; color: var(--dim); line-height: 1.4; }
+.arch-block.hi-t .ab-name { color: var(--teal); }
+.arch-block.hi-a .ab-name { color: var(--amber); }
+.arch-arr {
+  width: 28px; flex-shrink: 0; display: flex; align-items: center;
+  justify-content: center; color: var(--border2); font-size: 18px; font-weight: 300;
+}
+.arch-down {
+  display: flex; justify-content: center; align-items: center;
+  height: 28px; color: var(--border2); font-size: 18px;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+
+/* ── FIGURE ── */
+.fig-box { background:var(--bg2); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+.fig-inner { padding: 16px; }
+.fig-cap { padding:12px 18px; font-size:12.5px; color:var(--dim); border-top:1px solid var(--border); line-height:1.5; background:var(--bg2); }
+.fig-cap strong { color: var(--text2); }
+
+/* ── TAGS ── */
+.tags { display:flex; flex-wrap:wrap; gap:8px; }
+.tag { font-size:12.5px; padding:5px 13px; border-radius:999px; border:1px solid; }
+.tag.t { border-color:#bae6fd; color:var(--teal); background:var(--teal-light); }
+.tag.a { border-color:var(--amber-mid); color:var(--amber); background:var(--amber-light); }
+.tag.n { border-color:var(--border2); color:var(--text2); background:var(--bg2); }
+
+/* ── AWARD ── */
+.award-card { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:28px; display:flex; flex-direction:column; gap:10px; }
+.award-rank { font-size:32px; font-weight:800; font-family:'JetBrains Mono',monospace; line-height:1; }
+.award-name { font-size:16px; font-weight:700; color:var(--text); line-height:1.4; }
+.award-event { font-size:13px; color:var(--dim); line-height:1.5; }
+.award-students { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--dim); margin-top:4px; }
+
+/* ── FLOW STRIP ── */
+.flow-strip { display:flex; align-items:stretch; gap:0; overflow-x:auto; padding-bottom:4px; }
+.fs-box {
+  flex:1; min-width:110px; background:var(--bg); border:1.5px solid var(--border);
+  border-radius:10px; padding:14px 10px; text-align:center;
+  display:flex; flex-direction:column; align-items:center; gap:5px;
+  font-size:12.5px; font-weight:600; color:var(--text);
+}
+.fs-box.t { border-color:var(--teal); background:var(--teal-light); color:var(--teal); }
+.fs-box.a { border-color:var(--amber); background:var(--amber-light); color:var(--amber); }
+.fs-box .fi { font-size:22px; }
+.fs-box .fd { font-size:11px; color:var(--dim); font-weight:400; }
+.fs-box.t .fd { color:var(--teal); opacity:0.7; }
+.fs-box.a .fd { color:var(--amber); opacity:0.7; }
+.fs-arr { width:30px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:var(--border2); font-size:20px; }
+</style>
+
+<template id="__bundler_thumbnail" data-bg-color="#0f1923">
+  <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+    <rect width="800" height="500" fill="#0f1923"/>
+    <rect x="60" y="60" width="680" height="80" rx="10" fill="#1e3a5f"/>
+    <rect x="80" y="80" width="320" height="16" rx="4" fill="#67e8f9" opacity="0.8"/>
+    <rect x="80" y="106" width="200" height="10" rx="3" fill="#94a3b8" opacity="0.5"/>
+    <rect x="60" y="180" width="320" height="140" rx="10" fill="#1e3a5f"/>
+    <rect x="80" y="200" width="100" height="10" rx="3" fill="#0891b2" opacity="0.7"/>
+    <rect x="80" y="220" width="280" height="8" rx="3" fill="#94a3b8" opacity="0.4"/>
+    <rect x="80" y="236" width="240" height="8" rx="3" fill="#94a3b8" opacity="0.3"/>
+    <rect x="80" y="280" width="160" height="20" rx="4" fill="#0891b2" opacity="0.6"/>
+    <rect x="400" y="180" width="340" height="140" rx="10" fill="#2d1a06"/>
+    <rect x="420" y="200" width="100" height="10" rx="3" fill="#d97706" opacity="0.7"/>
+    <rect x="420" y="220" width="280" height="8" rx="3" fill="#94a3b8" opacity="0.4"/>
+    <rect x="420" y="236" width="220" height="8" rx="3" fill="#94a3b8" opacity="0.3"/>
+    <rect x="420" y="280" width="160" height="20" rx="4" fill="#d97706" opacity="0.6"/>
+    <rect x="60" y="360" width="680" height="80" rx="10" fill="#1e3a5f" opacity="0.5"/>
+    <rect x="80" y="378" width="180" height="12" rx="4" fill="#67e8f9" opacity="0.5"/>
+    <rect x="80" y="400" width="500" height="8" rx="3" fill="#94a3b8" opacity="0.3"/>
+  </svg>
+</template>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">NCKU · Dept. of Electrical Engineering · Tainan, Taiwan</div>
+    <h1>Assistive Navigation for Visually Impaired People<br>via <span class="ht">Multi-Sensor Fusion &amp; Smart Camera Networks</span></h1>
+    <div class="hero-author">
+      Prof. Sok-Ian Sou &nbsp;蘇淑茵
+      <small>&nbsp;·&nbsp; National Cheng Kung University &nbsp;·&nbsp; sisou@mail.ncku.edu.tw</small>
+    </div>
+    <div class="hero-chips">
+      <span class="hchip t">ViTrack · Multimedia Tools &amp; Applications · vol.85, no.70 · Feb. 2026</span>
+      <span class="hchip a">CamTrack · Neural Computing and Applications · accepted 2026</span>
+      <a href="https://link.springer.com/article/10.1007/s11042-026-21198-6" target="_blank" rel="noopener"
+         style="display:inline-flex;align-items:center;gap:7px;padding:8px 18px;background:var(--teal);color:#fff;border-radius:7px;font-size:13px;font-weight:600;text-decoration:none;font-family:'JetBrains Mono',monospace;letter-spacing:0.02em;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Paper
+      </a>
+      <a href="https://www.youtube.com/watch?v=8gY8KdVJFRc" target="_blank" rel="noopener"
+         style="display:inline-flex;align-items:center;gap:7px;padding:8px 18px;background:#dc2626;color:#fff;border-radius:7px;font-size:13px;font-weight:600;text-decoration:none;font-family:'JetBrains Mono',monospace;letter-spacing:0.02em;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>
+        Demo Video
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="content">
+
+<!-- ═══ DEMO SNAPSHOTS ═══ -->
+<section class="section">
+  <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.06em;font-family:'JetBrains Mono',monospace;">Demo Snapshots</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <figure style="margin:0;">
+      <img src="uploads/pasted-1777509672561-0.png" alt="ViTrack deviation and obstruction examples" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block;">
+      <figcaption style="font-size:12px;color:var(--dim);margin-top:8px;line-height:1.5;">Example ViTrack notifications: (a) Deviation — user's direction diverges from the tactile path; (b) Obstruction — a bicycle on the tactile paving triggers an alert.</figcaption>
+    </figure>
+    <figure style="margin:0;">
+      <img src="uploads/pasted-1777509851607-0.png" alt="CamTrack handover zone and camera coverage" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block;">
+      <figcaption style="font-size:12px;color:var(--dim);margin-top:8px;line-height:1.5;">Handover zone settings based on camera location in the CamTrack system. Camera A→B handover and the guiding process are shown in the demo video.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ═══ AWARDS ═══ -->
+<section class="section">
+  <div class="sec-eyebrow">Student Achievements · 2023</div>
+  <h2 class="sec-title">Competition Recognition</h2>
+  <p class="sec-desc">Student teams supervised by Prof. Sou received awards at both national and international competitions.</p>
+  <div class="g2">
+    <div class="award-card" style="border-top:4px solid var(--amber);">
+      <div class="award-rank" style="color:var(--amber);">2nd Place</div>
+      <div class="award-name">鈺立微 AI視覺辨識及運算組</div>
+      <div class="award-event">第28屆大專校院資訊應用服務創新競賽<br>2023 University Information Application Innovation Competition</div>
+      <div class="award-students">黃湙珵 · 林耕澤 · 吳炯霖</div>
+    </div>
+    <div class="award-card" style="border-top:4px solid var(--teal);">
+      <div class="award-rank" style="color:var(--teal);font-size:22px;line-height:1.4;">Honorary Mention</div>
+      <div class="award-name">Viclusion: A Vision-assisted Tracking &amp; Guiding System for Visually Impaired People</div>
+      <div class="award-event">2023 IEEE ComSoc Student Competition · IEEE Communications Society</div>
+      <div class="award-students">黃暄閔 · 黃湙珵 · 林耕澤 · 吳炯霖</div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ═══ MOTIVATION ═══ -->
+<section class="section">
+  <div class="sec-eyebrow">Motivation</div>
+  <h2 class="sec-title">The Navigation Challenge</h2>
+  <p class="sec-desc">2.2 billion people worldwide live with vision impairment. Traditional aids — white canes and tactile paving — are easily blocked by obstacles, while single-sensor electronic travel aids suffer signal interference or occlusion. Our research fuses existing surveillance infrastructure with smartphone sensors to deliver reliable, continuous, and unobtrusive guidance with no extra wearable hardware.</p>
+  <div class="g3">
+    <div class="stat-block"><div class="stat-n">2.2<span style="font-size:24px;">B</span></div><div class="stat-l">people with vision impairment worldwide (WHO)</div></div>
+    <div class="stat-block"><div class="stat-n">500<span style="font-size:24px;">+</span></div><div class="stat-l">surveillance cameras on NCKU smart campus</div></div>
+    <div class="stat-block"><div class="stat-n" style="color:var(--amber);">0</div><div class="stat-l">extra wearable devices required for users</div></div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ═══ VITRACK ═══ -->
+<section class="section">
+  <div class="sec-eyebrow">Publication 1 · MTAP 2026 · S.-I. Sou &amp; S.-M. Huang · doi: 10.1007/s11042-026-21198-6</div>
+  <h2 class="sec-title"><span class="t">ViTrack</span> — BLE &amp; Camera Navigation System</h2>
+  <p class="sec-desc">ViTrack fuses BLE wireless fingerprinting with existing surveillance cameras for privacy-preserving, user-controlled outdoor navigation. A DNN/LSTM network localizes the user via RSSI signals from low-cost sniffers, then hands off to YOLOv7 for visual tracking, deviation detection, and obstacle avoidance — all without extra hardware beyond the user's smartphone.</p>
+
+  <!-- ARCHITECTURE FIGURE -->
+  <div style="margin-bottom:24px;">
+    <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.06em;font-family:'JetBrains Mono',monospace;">System Architecture — Layered View</div>
+    <div class="arch-wrap">
+
+      <!-- Layer 1: User -->
+      <div class="arch-layer">
+        <div class="arch-layer-label">User Layer</div>
+        <div class="arch-blocks">
+          <div class="arch-block hi-t">
+            <div class="ab-icon">📱</div>
+            <div class="ab-name">Smartphone</div>
+            <div class="ab-sub">BLE advertising · Bluetooth 5.0 · 100 ms interval</div>
+          </div>
+          <div class="arch-arr">→</div>
+          <div class="arch-block">
+            <div class="ab-icon">🦯</div>
+            <div class="ab-name">Guidance Feedback</div>
+            <div class="ab-sub">Audio / haptic navigation commands via mobile app</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layer 2: Wireless -->
+      <div class="arch-layer" style="background:#fafcff;">
+        <div class="arch-layer-label t">Wireless<br>Layer</div>
+        <div class="arch-blocks" style="gap:0;">
+          <div class="arch-block" style="flex:0.8;">
+            <div class="ab-icon">📡</div>
+            <div class="ab-name">4 × BLE Sniffers</div>
+            <div class="ab-sub">Raspberry Pi 3B+ · RSSI collection · 6 m apart</div>
+          </div>
+          <div class="arch-arr">→</div>
+          <div class="arch-block hi-t">
+            <div class="ab-icon">🧠</div>
+            <div class="ab-name">DNN / LSTM Localization</div>
+            <div class="ab-sub">Min-max normalized RSSI · T=3 time steps · Softmax output → 8 reference points</div>
+          </div>
+          <div class="arch-arr">→</div>
+          <div class="arch-block">
+            <div class="ab-icon">📍</div>
+            <div class="ab-name">User Location Estimate</div>
+            <div class="ab-sub">1 Hz update · Observation zone 20m × 5.7m</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layer 3: Vision -->
+      <div class="arch-layer">
+        <div class="arch-layer-label t">Vision<br>Layer</div>
+        <div class="arch-blocks">
+          <div class="arch-block">
+            <div class="ab-icon">📷</div>
+            <div class="ab-name">Surveillance Camera</div>
+            <div class="ab-sub">NCKU network · 1920×1080 @ 20 fps</div>
+          </div>
+          <div class="arch-arr">→</div>
+          <div class="arch-block hi-t">
+            <div class="ab-icon">👁️</div>
+            <div class="ab-name">YOLOv7 Detection</div>
+            <div class="ab-sub">Confidence ≥ 0.5 · Real-time person detection</div>
+          </div>
+          <div class="arch-arr">→</div>
+          <div class="arch-block">
+            <div class="ab-icon">🔗</div>
+            <div class="ab-name">Temporal Matching</div>
+            <div class="ab-sub">Majority-vote across n frames: O* = argmax S(Oⱼ) — mismatch probability ~αⁿ</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layer 4: Safety -->
+      <div class="arch-layer" style="background:#fafcff;">
+        <div class="arch-layer-label t">Safety<br>Layer</div>
+        <div class="arch-blocks">
+          <div class="arch-block hi-t">
+            <div class="ab-icon">📐</div>
+            <div class="ab-name">Deviation Detection</div>
+            <div class="ab-sub">Nested zones R_TP ⊂ R_OZ · Yaw angle θ_TP calibration · 3-tier alerts</div>
+          </div>
+          <div class="arch-arr">→</div>
+          <div class="arch-block hi-t">
+            <div class="ab-icon">🚧</div>
+            <div class="ab-name">Obstacle Avoidance</div>
+            <div class="ab-sub">Left / front / right detection · Correction commands N = −1, 0, +1</div>
+          </div>
+          <div class="arch-arr">→</div>
+          <div class="arch-block">
+            <div class="ab-icon">🗺️</div>
+            <div class="ab-name">Path Guidance</div>
+            <div class="ab-sub">Direction correction delivered via smartphone notifications</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Data augmentation highlight -->
+  <div class="g2" style="margin-bottom:24px;">
+    <div class="card card-teal">
+      <div class="card-title t">Key Innovation: Data Augmentation for Sniffer Failure</div>
+      <ul class="bl" style="margin-bottom:14px;">
+        <li>Randomly zero out one sniffer's RSSI during training to simulate device outage</li>
+        <li>Augmented dataset: 4 groups, each simulating failure of one specific sniffer</li>
+        <li>DNN/LSTM with augmentation consistently outperforms baseline across <em>all</em> sniffer-failure scenarios</li>
+      </ul>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);line-height:1.8;">
+        r<sub>i,aug</sub> = [RSSI'<sub>1</sub>, … , 0 (sniffer a), … , RSSI'<sub>J</sub>]<br>
+        P_mismatch ≈ α<sup>n</sup> &nbsp;→ longer window = exponentially better matching
+      </div>
+    </div>
+
+    <div class="card card-teal">
+      <div class="card-title t">Localization Accuracy — Model Comparison (MDE)</div>
+      <p style="font-size:12.5px;color:var(--dim);margin-bottom:16px;">Mean Distance Error across DNN, 1D-CNN, and LSTM variants. Lower = better.</p>
+      <div class="bar-chart">
+        <div class="bar-row"><div class="bar-label">DNN</div><div class="bar-track"><div class="bar-fill" style="width:82%;background:#93c5fd;color:#1e3a5f;">Highest MDE</div></div></div>
+        <div class="bar-row"><div class="bar-label">1D-CNN (T=1)</div><div class="bar-track"><div class="bar-fill" style="width:68%;background:#60a5fa;color:#1e3a5f;">High</div></div></div>
+        <div class="bar-row"><div class="bar-label">1D-CNN (T=3)</div><div class="bar-track"><div class="bar-fill" style="width:50%;background:#38bdf8;color:#0c4a6e;">Medium</div></div></div>
+        <div class="bar-row"><div class="bar-label" style="font-weight:700;color:var(--teal);">DNN/LSTM ★</div><div class="bar-track"><div class="bar-fill" style="width:36%;background:var(--teal);color:#fff;font-weight:700;">Best ✓</div></div></div>
+      </div>
+      <p style="font-size:11.5px;color:var(--dim);margin-top:12px;">★ Heterogeneous device results are similar — outdoor RSSI variability dominates over hardware differences.</p>
+    </div>
+  </div>
+
+  <!-- Deployment table -->
+  <div class="card card-teal">
+    <div class="card-title t">Experiment Deployment Parameters</div>
+    <table class="ptable">
+      <thead><tr><th>Component</th><th>Specification</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>BLE Sniffers</td><td class="hi">4 × Raspberry Pi 3B+</td><td>Positioned 6 m apart at 0.7 m height on traffic cones</td></tr>
+        <tr><td>Reference Points</td><td class="hi">8 RPs · 2 m spacing</td><td>20 m × 5.7 m observation zone at NCKU Dept. EE entrance</td></tr>
+        <tr><td>Surveillance Camera</td><td class="hi">1920 × 1080 @ 20 fps</td><td>Existing NCKU campus network — no new hardware added</td></tr>
+        <tr><td>BLE advertising</td><td class="hi">100 ms · 0 dBm · BT 5.0</td><td>nRF Connect app; various smartphone brands tested</td></tr>
+        <tr><td>LSTM time steps T</td><td class="hi">T = 3</td><td>Best accuracy/latency trade-off for temporal RSSI features</td></tr>
+        <tr><td>HBOE body orientation</td><td class="hi">Absolute angle error</td><td>Used for guiding system performance evaluation</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</section>
+
+<hr class="div">
+
+<!-- ═══ CAMTRACK ═══ -->
+<section class="section">
+  <div class="sec-eyebrow">Publication 2 · NCA 2026 · S.-I. Sou, Y.-C. Huang &amp; C.-L. Wu</div>
+  <h2 class="sec-title"><span class="a">CamTrack</span> — Multi-Sensor Fusion &amp; Predictive Handover</h2>
+  <p class="sec-desc">CamTrack advances ViTrack by adding IMU-derived trajectory prediction for proactive camera-to-camera handover. A Markov-chain probability model explicitly quantifies the cost–benefit trade-off between tracking reliability and camera resource usage, enabling informed system configuration rather than heuristic tuning.</p>
+
+  <!-- ARCHITECTURE FIGURE -->
+  <div style="margin-bottom:24px;">
+    <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.06em;font-family:'JetBrains Mono',monospace;">System Architecture — Layered View</div>
+    <div class="arch-wrap">
+
+      <!-- Layer 1: Sensors -->
+      <div class="arch-layer">
+        <div class="arch-layer-label" style="background:var(--amber-light);color:var(--amber);border-right-color:var(--amber-mid);">Sensor<br>Layer</div>
+        <div class="arch-blocks">
+          <div class="arch-block hi-a">
+            <div class="ab-icon">📐</div>
+            <div class="ab-name">IMU (Phone)</div>
+            <div class="ab-sub">Yaw angle · velocity · heading estimation</div>
+          </div>
+          <div class="arch-arr" style="color:#fcd34d;">+</div>
+          <div class="arch-block hi-a">
+            <div class="ab-icon">📡</div>
+            <div class="ab-name">BLE Sniffers</div>
+            <div class="ab-sub">RSSI coarse-grained localization across campus</div>
+          </div>
+          <div class="arch-arr" style="color:#fcd34d;">+</div>
+          <div class="arch-block hi-a">
+            <div class="ab-icon">📷</div>
+            <div class="ab-name">Camera Network</div>
+            <div class="ab-sub">500+ cameras · 69 NVR servers · 1920×1080@20fps</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layer 2: Handover -->
+      <div class="arch-layer" style="background:#fffdf5;">
+        <div class="arch-layer-label" style="background:var(--amber-light);color:var(--amber);border-right-color:var(--amber-mid);">Handover<br>Layer</div>
+        <div class="arch-blocks">
+          <div class="arch-block">
+            <div class="ab-icon">🧭</div>
+            <div class="ab-name">Yaw Mapping</div>
+            <div class="ab-sub">IMU Yaw → T-sample directional verification · camera transition table</div>
+          </div>
+          <div class="arch-arr" style="color:var(--amber);">→</div>
+          <div class="arch-block hi-a">
+            <div class="ab-icon">🔮</div>
+            <div class="ab-name">Predictive Camera Selection</div>
+            <div class="ab-sub">Enters handover zone → activates next camera · deactivates current</div>
+          </div>
+          <div class="arch-arr" style="color:var(--amber);">→</div>
+          <div class="arch-block hi-a">
+            <div class="ab-icon">📊</div>
+            <div class="ab-name">Markov Handover Model</div>
+            <div class="ab-sub">P_Φ(T_H) = P₁ + P₂ · analytical cost–benefit framework</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layer 3: Tracking -->
+      <div class="arch-layer">
+        <div class="arch-layer-label" style="background:var(--amber-light);color:var(--amber);border-right-color:var(--amber-mid);">Tracking<br>Layer</div>
+        <div class="arch-blocks">
+          <div class="arch-block">
+            <div class="ab-icon">👁️</div>
+            <div class="ab-name">YOLOv7</div>
+            <div class="ab-sub">25–30 fps · RTX 3060 · confidence ≥ 0.5</div>
+          </div>
+          <div class="arch-arr" style="color:var(--amber);">→</div>
+          <div class="arch-block hi-a">
+            <div class="ab-icon">🪪</div>
+            <div class="ab-name">Stage 1: ReID Matching</div>
+            <div class="ab-sub">High-conf detections · Hungarian algorithm · L2 distance threshold τ=15</div>
+          </div>
+          <div class="arch-arr" style="color:var(--amber);">→</div>
+          <div class="arch-block hi-a">
+            <div class="ab-icon">📈</div>
+            <div class="ab-name">Stage 2: SORT Tracking</div>
+            <div class="ab-sub">Kalman filter · IoU = 0.05 · handles occluded / low-confidence detections</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layer 4: Output -->
+      <div class="arch-layer" style="background:#fffdf5;">
+        <div class="arch-layer-label" style="background:var(--amber-light);color:var(--amber);border-right-color:var(--amber-mid);">Output<br>Layer</div>
+        <div class="arch-blocks">
+          <div class="arch-block">
+            <div class="ab-icon">🗺️</div>
+            <div class="ab-name">MapTalk Interface</div>
+            <div class="ab-sub">Web UI for admin · camera map · live stream access via SSH tunnel</div>
+          </div>
+          <div class="arch-arr" style="color:var(--amber);">→</div>
+          <div class="arch-block hi-a">
+            <div class="ab-icon">📱</div>
+            <div class="ab-name">Mobile Navigation</div>
+            <div class="ab-sub">Real-time guiding notifications pushed to user's smartphone</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="g2" style="margin-bottom:24px;">
+    <div class="card card-amber">
+      <div class="card-title a">Tracking Success: 6 vs. 9 Active Cameras</div>
+      <div class="bar-chart" style="margin-bottom:12px;">
+        <div class="bar-row"><div class="bar-label" style="font-size:11.5px;width:120px;">Sparse · 6 cam</div><div class="bar-track"><div class="bar-fill" style="width:48%;background:#fde68a;color:#78350f;">~48%</div></div></div>
+        <div class="bar-row"><div class="bar-label" style="font-size:11.5px;width:120px;font-weight:700;color:var(--amber);">Sparse · 9 cam ★</div><div class="bar-track"><div class="bar-fill" style="width:87%;background:var(--amber);color:#fff;font-weight:700;">~87% &nbsp;+39%</div></div></div>
+        <div class="bar-row"><div class="bar-label" style="font-size:11.5px;width:120px;">Dense · 6 cam</div><div class="bar-track"><div class="bar-fill" style="width:74%;background:#fde68a;color:#78350f;">~74%</div></div></div>
+        <div class="bar-row"><div class="bar-label" style="font-size:11.5px;width:120px;font-weight:700;color:var(--amber);">Dense · 9 cam ★</div><div class="bar-track"><div class="bar-fill" style="width:87%;background:var(--amber);color:#fff;font-weight:700;">~87% &nbsp;+13%</div></div></div>
+      </div>
+      <p style="font-size:11.5px;color:var(--dim);">Sparse zones gain more from additional cameras — analytical and simulation results closely matched.</p>
+    </div>
+    <div class="card card-amber">
+      <div class="card-title a">Expiry Timer T_H Effect (Sparse Zone)</div>
+      <div class="bar-chart" style="margin-bottom:12px;">
+        <div class="bar-row"><div class="bar-label" style="font-size:11.5px;width:110px;">T_H = 10 min</div><div class="bar-track"><div class="bar-fill" style="width:40%;background:#fde68a;color:#78350f;">Low</div></div></div>
+        <div class="bar-row"><div class="bar-label" style="font-size:11.5px;width:110px;">T_H = 30 min</div><div class="bar-track"><div class="bar-fill" style="width:62%;background:#fcd34d;color:#78350f;">Medium</div></div></div>
+        <div class="bar-row"><div class="bar-label" style="font-size:11.5px;width:110px;">T_H = 60 min</div><div class="bar-track"><div class="bar-fill" style="width:78%;background:#f59e0b;color:#fff;">High</div></div></div>
+        <div class="bar-row"><div class="bar-label" style="font-size:11.5px;width:110px;font-weight:700;color:var(--amber);">T_H ≥ 100 min</div><div class="bar-track"><div class="bar-fill" style="width:88%;background:var(--amber);color:#fff;font-weight:700;">Saturated ✓</div></div></div>
+      </div>
+      <p style="font-size:11.5px;color:var(--dim);">T_H gain saturates ~100 min, aligned with ~30-min average idle time. Trade-off: higher T_H → higher resource cost.</p>
+    </div>
+  </div>
+
+  <div class="card card-amber">
+    <div class="card-title a">Markov Chain Handover Probability Model</div>
+    <div class="g2">
+      <ul class="bl a">
+        <li><strong>State 0</strong> = user in uncovered gap; State i = user in camera C<sub>i</sub> coverage</li>
+        <li><strong>P₁</strong>: immediate transition to adjacent camera (direct success)</li>
+        <li><strong>P₂</strong>: delayed re-entry within timer T<sub>H</sub> (conditional success)</li>
+        <li>P<sub>Φ</sub>(T<sub>H</sub>) = P₁ + P₂ — closed-form analytical expression</li>
+        <li>Enables quantitative cost–benefit decisions for any campus deployment</li>
+      </ul>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);line-height:2;">
+        P₁ = (1−P<sub>i,0</sub>) · Σp<sub>i,j</sub> / (Σp<sub>i,j</sub> + Σp<sub>i,k</sub>)<br>
+        P₂ = P<sub>i,0</sub>(1−e<sup>−μT_H</sup>) · Σq<sub>j</sub> / (Σq<sub>j</sub> + Σq<sub>k</sub>)<br>
+        <span style="color:var(--amber);font-weight:600;">P<sub>Φ</sub>(T_H) = P₁ + P₂</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ═══ TAGS + FOOTER ═══ -->
+<section class="section">
+  <div class="sec-eyebrow">Lab Expertise</div>
+  <h2 class="sec-title">Research Topics</h2>
+  <div class="tags" style="margin-top:8px;">
+    <span class="tag t">BLE Wireless Fingerprinting</span>
+    <span class="tag t">LSTM Localization</span>
+    <span class="tag t">Person Re-Identification</span>
+    <span class="tag t">Multi-Camera Tracking</span>
+    <span class="tag t">Sensor Fusion (IMU+BLE+Camera)</span>
+    <span class="tag a">Predictive Handover</span>
+    <span class="tag a">Markov Chain Modeling</span>
+    <span class="tag a">YOLOv7 Object Detection</span>
+    <span class="tag n">Assistive Navigation</span>
+    <span class="tag n">Obstacle Avoidance</span>
+    <span class="tag n">Deviation Detection</span>
+    <span class="tag n">Smart Campus Systems</span>
+  </div>
+</section>
+
+<hr class="div">
+
+<footer style="padding:0 48px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;">
+  <div>
+    <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;">Prof. Sok-Ian Sou &nbsp;蘇淑茵</div>
+    <div style="font-size:13px;color:var(--dim);line-height:1.7;">Dept. of Electrical Engineering · National Cheng Kung University · Tainan, Taiwan<br>
+    <span style="font-family:'JetBrains Mono',monospace;color:var(--teal);">sisou@mail.ncku.edu.tw</span></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">
+    <span class="hchip t" style="font-size:11px;padding:6px 12px;background:var(--teal-light);color:var(--teal);border-color:#bae6fd;">ViTrack · MTAP 2026 · doi: 10.1007/s11042-026-21198-6</span>
+    <span class="hchip a" style="font-size:11px;padding:6px 12px;background:var(--amber-light);color:var(--amber);border-color:var(--amber-mid);">CamTrack · Neural Computing and Applications · 2026</span>
+  </div>
+</footer>
+
+</div><!-- end content -->
+</body>
+</html>
