@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCSLab 研究生招募海報</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        .serif { font-family: 'Noto Serif TC', serif; }
+        .navy-bg { background-color: #00203F; }
+        .ncku-blue { color: #0047AB; }
+        .ncku-blue-bg { background-color: #0047AB; }
+        .gradient-text {
+            background: linear-gradient(135deg, #0047AB 0%, #00203F 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: #0047AB;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-900 antialiased p-4 md:p-12">
+
+    <div class="max-w-7xl mx-auto border-t-[16px] border-slate-900 bg-white shadow-2xl p-8 md:p-16 relative overflow-hidden">
+        
+        <!-- 背景修飾 -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-bl-full -z-0 opacity-50"></div>
+
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 relative z-10">
+            <div class="text-3xl font-black tracking-tighter text-slate-900 border-l-8 border-blue-700 pl-4">
+                NCKU / MCSLAB
+            </div>
+            <div class="mt-4 md:mt-0 flex flex-wrap gap-3 font-bold">
+                <span class="px-4 py-1.5 bg-slate-900 text-white text-sm rounded tracking-widest uppercase">Master / PhD Recruitment</span>
+                <span class="px-4 py-1.5 bg-blue-100 text-blue-700 text-sm rounded tracking-widest">2024 - 2026</span>
+            </div>
+        </div>
+
+        <!-- Title Section -->
+        <header class="mb-24 relative z-10">
+            <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-10 serif">
+                挑戰無源領域自適應 (SFDA)：<br>
+                <span class="gradient-text">室內定位技術的下一場革命</span>
+            </h1>
+            <p class="text-2xl md:text-4xl text-gray-500 max-w-5xl leading-snug font-light italic">
+                “我們致力於開發不依賴原始數據、具備「物理直覺」的自適應演算法，解決數據隱私與動態環境下的定位難題。”
+            </p>
+        </header>
+
+        <!-- Background & Key Concept -->
+        <div class="grid lg:grid-cols-5 gap-12 mb-24 relative z-10">
+            <div class="lg:col-span-3 space-y-10">
+                <h2 class="text-3xl font-bold border-b-4 border-slate-100 pb-4 inline-block">研究背景與核心挑戰</h2>
+                <div class="space-y-8">
+                    <div class="flex gap-6">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                            <svg class="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold mb-2">隱私保護 (Privacy)</h4>
+                            <p class="text-xl text-gray-600">來源域指紋數據因隱私或法規限制，無法於目標域部署時取得，傳統 UDA 方法不再適用。</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                            <svg class="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold mb-2">信號漂移 (Temporal Drift)</h4>
+                            <p class="text-xl text-gray-600">無線訊號隨家具移動、環境變遷動態偏移，需具備長效穩定的自我演化能力。</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                            <svg class="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A2 2 0 013 15.488V5.512a2 2 0 011.053-1.776L9 1l5.447 2.724A2 2 0 0115 5.512v9.976a2 2 0 01-1.053 1.776L9 20z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold mb-2">物理通用性 (Generality)</h4>
+                            <p class="text-xl text-gray-600">擺脫對 BSSID 的強依賴，建立基於世界座標與幾何規律的通用定位框架。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2">
+                <div class="bg-slate-900 text-white p-10 rounded-3xl text-center shadow-2xl border-b-[10px] border-blue-600 h-full flex flex-col justify-center">
+                    <div class="text-5xl font-black mb-4 tracking-tighter">Source-Free</div>
+                    <div class="text-2xl text-blue-400 font-bold uppercase tracking-widest mb-8">Weights-Only Adaptation</div>
+                    <div class="w-24 h-1.5 bg-blue-500 mx-auto mb-8"></div>
+                    <p class="text-xl text-gray-400 italic">在沒有原始數據的「荒原」中<br>靠模型權重與物理直覺實現進化</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Research Tracks Matrix -->
+        <div class="grid lg:grid-cols-3 gap-8 mb-24 relative z-10">
+            
+            <!-- Track A -->
+            <div class="bg-white border-2 border-gray-100 rounded-2xl p-8 card-hover transition-all duration-300">
+                <div class="text-blue-700 font-black text-xl mb-4">方向 A / Physical AI</div>
+                <h3 class="text-3xl font-bold mb-2 leading-tight serif">物理流形約束與<br>自我監督學習</h3>
+                <p class="text-gray-400 text-sm font-bold uppercase tracking-widest mb-8">Geometry-Constrained Self-Training</p>
+                <div class="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg text-sm font-bold mb-8 border border-blue-100">
+                    核心技術：基於空間幾何先驗
+                </div>
+                <p class="text-lg text-gray-600 leading-relaxed mb-10">
+                    利用室內物理地圖與拓撲作為強約束，開發具備「物理常識」的定位模型。徹底杜絕穿牆、路徑不連續等非物理偏誤。
+                </p>
+                <ul class="space-y-3 text-sm text-gray-500 font-bold uppercase tracking-tight">
+                    <li class="flex items-center gap-2">● 幾何一致性損失函數</li>
+                    <li class="flex items-center gap-2">● 物理流形對齊技術</li>
+                    <li class="flex items-center gap-2">● 無標籤自適應框架</li>
+                </ul>
+            </div>
+
+            <!-- Track B -->
+            <div class="bg-white border-2 border-gray-100 rounded-2xl p-8 card-hover transition-all duration-300">
+                <div class="text-blue-700 font-black text-xl mb-4">方向 B / World Model</div>
+                <h3 class="text-3xl font-bold mb-2 leading-tight serif">跨模態語義<br>知識蒸餾技術</h3>
+                <p class="text-gray-400 text-sm font-bold uppercase tracking-widest mb-8">Cross-modal Knowledge Distillation</p>
+                <div class="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg text-sm font-bold mb-8 border border-blue-100">
+                    核心技術：室內環境世界模型
+                </div>
+                <p class="text-lg text-gray-600 leading-relaxed mb-10">
+                    將來源域中「視覺語義」的穩定環境感知能力，蒸餾給目標域的純無線電模型。即使在沒有攝影機的環境，也具備視覺等級的魯棒性。
+                </p>
+                <ul class="space-y-3 text-sm text-gray-500 font-bold uppercase tracking-tight">
+                    <li class="flex items-center gap-2">● 跨模態特徵隱空間映射</li>
+                    <li class="flex items-center gap-2">● 環境穩定語義特徵提取</li>
+                    <li class="flex items-center gap-2">● 無源語義知識遷移</li>
+                </ul>
+            </div>
+
+            <!-- Track C -->
+            <div class="bg-white border-2 border-gray-100 rounded-2xl p-8 card-hover transition-all duration-300">
+                <div class="text-blue-700 font-black text-xl mb-4">方向 C / Efficiency</div>
+                <h3 class="text-3xl font-bold mb-2 leading-tight serif">原型正交對齊<br>與算法優化</h3>
+                <p class="text-gray-400 text-sm font-bold uppercase tracking-widest mb-8">Prototype-based Orthogonal Alignment</p>
+                <div class="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg text-sm font-bold mb-8 border border-blue-100">
+                    核心技術：高效分布對齊演算法
+                </div>
+                <p class="text-lg text-gray-600 leading-relaxed mb-10">
+                    開發基於「類別原型」的正交映射。在完全無源 (Source-Free) 情況下，實現極低功耗、毫秒級的場景適應，適用於各類邊緣設備。
+                </p>
+                <ul class="space-y-3 text-sm text-gray-500 font-bold uppercase tracking-tight">
+                    <li class="flex items-center gap-2">● 正交投影分布校準</li>
+                    <li class="flex items-center gap-2">● 類別原型重心對齊</li>
+                    <li class="flex items-center gap-2">● 輕量化神經網路部署</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Recruitment Footer -->
+        <footer class="navy-bg text-white rounded-3xl p-12 md:p-16 relative z-10">
+            <div class="grid md:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-4xl font-bold mb-10 flex items-center gap-4">招募對象與特質</h2>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="p-6 bg-slate-800 rounded-2xl">
+                            <div class="text-blue-400 font-bold text-xl mb-1">工程實作</div>
+                            <div class="text-slate-400 text-sm leading-snug">熟悉 Python / PyTorch 與 DL 框架運作。</div>
+                        </div>
+                        <div class="p-6 bg-slate-800 rounded-2xl">
+                            <div class="text-blue-400 font-bold text-xl mb-1">理論探索</div>
+                            <div class="text-slate-400 text-sm leading-snug">對幾何流形、最佳傳輸或空間建模有熱情。</div>
+                        </div>
+                        <div class="p-6 bg-slate-800 rounded-2xl">
+                            <div class="text-blue-400 font-bold text-xl mb-1">頂尖發表</div>
+                            <div class="text-slate-400 text-sm leading-snug">目標發表於 IEEE TMC / JSAC 或頂級會議。</div>
+                        </div>
+                        <div class="p-6 bg-slate-800 rounded-2xl">
+                            <div class="text-blue-400 font-bold text-xl mb-1">團隊協作</div>
+                            <div class="text-slate-400 text-sm leading-snug">延續實驗室成熟體系，共同攻克科學難題。</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-4xl serif italic text-blue-400 mb-6 tracking-wide">"Geometry never lies."</h2>
+                        <p class="text-xl text-slate-300 leading-relaxed font-light">
+                            在數據隱私的限制下，物理幾何是我們導航的唯一基準。<br>
+                            加入我們，定義下一代具備「物理智慧」的自適應定位系統。
+                        </p>
+                    </div>
+
+                    <div class="mt-12 space-y-6">
+                        <div class="text-3xl font-black">MCSLab 多媒體與通訊系統實驗室</div>
+                        <div class="text-blue-400 font-bold text-lg tracking-widest uppercase">National Cheng Kung University</div>
+                        
+                        <div class="pt-6 border-t border-slate-700 space-y-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                </div>
+                                <span class="text-2xl font-bold">實驗室位置：<span class="text-blue-400">92589</span></span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                </div>
+                                <span class="text-2xl font-bold">聯繫信箱：<span class="text-blue-400">sisou@mail.ncku.edu.tw</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Bottom Badges -->
+        <div class="mt-16 flex justify-center gap-16 opacity-30 grayscale">
+            <div class="text-center font-bold text-xs uppercase tracking-tighter">Localization</div>
+            <div class="text-center font-bold text-xs uppercase tracking-tighter">Physical AI</div>
+            <div class="text-center font-bold text-xs uppercase tracking-tighter">World Model</div>
+            <div class="text-center font-bold text-xs uppercase tracking-tighter">Source-Free DA</div>
+        </div>
+    </div>
+
+</body>
+</html>
